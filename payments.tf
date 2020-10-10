@@ -32,10 +32,9 @@ module "payments_proton_cron" {
     PROTONMAIL_LABEL_NAME    = var.protonmail_label_name
     TELEGRAM_BOT_API_TOKEN   = var.telegram_bot_api_token
     TELEGRAM_BOT_API_CHAT_ID = var.telegram_bot_api_chat_id
-    PGHOST                   = "postgres.postgres.svc.cluster.local"
-    PGUSER                   = "payments"
-    PGDATABASE               = "payments"
-    PGPASSWORD               = module.payments_db.postgres_password
+
+    POSTGRES_CONNECTION_STRING = module.payments_db.postgres_url
+    PGPASSWORD                 = module.payments_db.postgres_password
 
     DEVELOPMENT = true
   }
