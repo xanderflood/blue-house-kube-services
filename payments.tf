@@ -15,8 +15,7 @@ module "payments_db" {
   extensions = ["pgcrypto"]
 }
 
-## TODO kube cron job?
-module "payments_proton_deployment" {
+module "payments_proton_cron" {
   source    = "./modules/cron"
   name      = "payments-proton"
   namespace = kubernetes_namespace.payments.metadata.0.name
