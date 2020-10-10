@@ -1,5 +1,5 @@
 locals {
-  payments_build_num = "14"
+  payments_build_num = "5"
 }
 
 resource "kubernetes_namespace" "payments" {
@@ -19,6 +19,9 @@ module "payments_proton_cron" {
   source    = "./modules/cron"
   name      = "payments-proton"
   namespace = kubernetes_namespace.payments.metadata.0.name
+
+  # TODO remove
+  suspend = true
 
   image = "xanderflood/payment-scraper:build-${local.payments_build_num}"
 
