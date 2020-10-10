@@ -20,6 +20,8 @@ defaults:
       from_secret: telegram_bot_api_token
     TF_VAR_telegram_bot_api_chat_id:
       from_secret: telegram_bot_api_chat_id
+    TF_VAR_services_domain:
+      from_secret: services_domain
 
 steps:
 - name: plan
