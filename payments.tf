@@ -24,7 +24,7 @@ module "payments_proton_cron" {
   suspend = true
 
   image   = "xanderflood/payment-scraper:build-${local.payments_build_num}"
-  command = ["proton"]
+  command = ["./bin/run", "proton"]
 
   env = {
     PROTONMAIL_USERNAME      = var.protonmail_username
