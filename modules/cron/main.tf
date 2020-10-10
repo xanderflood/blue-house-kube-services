@@ -1,6 +1,9 @@
 variable "name" {
   type = string
 }
+variable "command" {
+  type = list(string)
+}
 variable "namespace" {
   type = string
 }
@@ -55,8 +58,9 @@ resource "kubernetes_cron_job" "cron_job" {
 
           spec {
             container {
-              image = var.image
-              name  = var.name
+              image   = var.image
+              name    = var.name
+              command = var.command
 
               dynamic "env" {
                 for_each = var.env
