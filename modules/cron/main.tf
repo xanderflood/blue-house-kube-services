@@ -19,20 +19,6 @@ variable "schedule" {
   type = string
 }
 
-# resource "kubernetes_manifest" "job" {
-#   provider = kubernetes-alpha
-#   manifest = yamldecode(templatefile("./job.yaml",
-#     {
-#       name              = var.name
-#       namespace         = namespace
-#       schedule          = var.schedule
-#       image             = var.image
-#       env_json          = jsonencode(var.env)
-#       capabilities_json = jsonencode(var.capbilities)
-#     }
-#   ))
-# }
-
 resource "kubernetes_cron_job" "cron_job" {
   metadata {
     name      = var.name

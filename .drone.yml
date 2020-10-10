@@ -1,0 +1,48 @@
+---
+kind: pipeline
+type: kubernetes
+name: blue-house-kube-services
+
+defaults:
+  image: &default_image
+    hashicorp/terraform:0.13.3
+  env: &default_env
+    KUBE_LOAD_CONFIG_FILE: false
+    TF_VAR_postgres_admin_password:
+      from_secret: postgres_admin_password
+    TF_VAR_protonmail_username:
+      from_secret: protonmail_username
+    TF_VAR_protonmail_password:
+      from_secret: protonmail_password
+    TF_VAR_protonmail_label_name:
+      from_secret: protonmail_label_name
+    TF_VAR_telegram_bot_api_token:
+      from_secret: telegram_bot_api_token
+    TF_VAR_telegram_bot_api_chat_id:
+      from_secret: telegram_bot_api_chat_id
+
+steps:
+- name: plan
+  image: *default_image
+  environment: *default_env
+
+  commands:
+  - terraform init -lock=false -input=false
+  - terraform validate
+  - terraform plan -lock=false -input=false
+  when:
+    event: [ push ]
+    branch:
+      exclude: [ master ]
+
+- name: apply
+  image: *default_image
+  environment: *default_env
+
+  commands:
+  - terraform init -lock=true -lock-timeout=0s -input=false
+  - terraform validate
+  - terraform plan -lock=true -lock-timeout=0s -input=false -out=tfplan .
+  - terraform apply -lock=true -lock-timeout=0s -input=false tfplan
+  when:
+    branch: [ master ]
