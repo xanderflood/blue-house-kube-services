@@ -23,7 +23,8 @@ module "payments_proton_cron" {
   # TODO remove
   suspend = true
 
-  image = "xanderflood/payment-scraper:build-${local.payments_build_num}"
+  image   = "xanderflood/payment-scraper:build-${local.payments_build_num}"
+  command = ["proton"]
 
   env = {
     PROTONMAIL_USERNAME      = var.protonmail_username
