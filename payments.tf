@@ -20,6 +20,9 @@ module "payments_proton_cron" {
   name      = "payments-proton"
   namespace = kubernetes_namespace.payments.metadata.0.name
 
+  # TODO remove
+  suspend = true
+
   image = "xanderflood/payment-scraper:build-${local.payments_build_num}"
 
   env = {

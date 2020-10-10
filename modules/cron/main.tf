@@ -18,6 +18,10 @@ variable "capabilities" {
 variable "schedule" {
   type = string
 }
+variable "suspend" {
+  type    = bool
+  default = false
+}
 
 resource "kubernetes_cron_job" "cron_job" {
   metadata {
@@ -33,6 +37,8 @@ resource "kubernetes_cron_job" "cron_job" {
 
     failed_jobs_history_limit     = 10
     successful_jobs_history_limit = 10
+
+    suspend = var.suspend
 
     job_template {
       metadata {
