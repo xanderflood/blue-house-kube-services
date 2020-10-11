@@ -1,5 +1,5 @@
 locals {
-  payments_build_num = "6"
+  payments_build_num = "7"
 }
 
 resource "kubernetes_namespace" "payments" {
