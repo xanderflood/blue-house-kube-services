@@ -1,5 +1,5 @@
 locals {
-  payments_build_num = "6"
+  payments_build_num = "7"
 }
 
 resource "kubernetes_namespace" "payments" {
@@ -25,6 +25,7 @@ module "payments_proton_cron" {
 
   image   = "xanderflood/payment-scraper:build-${local.payments_build_num}"
   command = ["./bin/run", "proton"]
+  uid     = 1500
 
   env = {
     PROTONMAIL_USERNAME      = var.protonmail_username
