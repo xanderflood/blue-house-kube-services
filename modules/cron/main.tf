@@ -21,6 +21,10 @@ variable "capabilities" {
 variable "schedule" {
   type = string
 }
+variable "uid" {
+  type    = number
+  default = null
+}
 variable "suspend" {
   type    = bool
   default = false
@@ -71,6 +75,7 @@ resource "kubernetes_cron_job" "cron_job" {
               }
 
               security_context {
+                run_as_user = var.uid
                 capabilities {
                   add = var.capabilities
                 }
